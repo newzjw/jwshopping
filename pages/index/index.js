@@ -1,38 +1,54 @@
-//Page Object
+// 0 引入 用来发送请求的 方法 一定要把路径补全
+import { request } from "../../request/index.js";
 Page({
   data: {
-    
+    // 轮播图数据
+    swiperList: [],
+    // 导航 数组
+    catesList:[],
+    // 楼层数据
+    floorList:[]
   },
   //options(Object)
   onLoad: function(options){
-    
+    // wx.request({
+    //   url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
+    //   success: (result)=>{
+    //     this.setData({
+    //       swiperList: result.data.message
+    //     })
+    //   }
+    // });
+    this.getSwiperList()
+    this.getCateList()
+    this.getFloorList()
   },
-  onReady: function(){
-    
+  // 获取轮播图数据
+  getSwiperList() {
+    request({ url: "/home/swiperdata" })
+    .then(result => {
+      this.setData({
+        swiperList: result.data.message
+      })
+    })
   },
-  onShow: function(){
-    
+  // 获取 分类导航数据
+  getCateList(){
+    request({ url: "/home/catitems" })
+    .then(result => {
+      console.log(result);
+      this.setData({
+        catesList: result.data.message
+      })
+    })
   },
-  onHide: function(){
-
-  },
-  onUnload: function(){
-
-  },
-  onPullDownRefresh: function(){
-
-  },
-  onReachBottom: function(){
-
-  },
-  onShareAppMessage: function(){
-
-  },
-  onPageScroll: function(){
-
-  },
-  //item(index,pagePath,text)
-  onTabItemTap:function(item){
-
+  // 获取 楼层数据
+  getFloorList(){
+    request({ url: "/home/floordata" })
+    .then(result => {
+      this.setData({
+        floorList: result.data.message
+      })
+    })
   }
 });
