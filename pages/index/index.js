@@ -2,33 +2,37 @@
 import { request } from "../../request/index.js";
 Page({
   data: {
-    // 轮播图数据
+    // 轮播图数组
     swiperList: [],
     // 导航 数组
     catesList:[],
     // 楼层数据
     floorList:[]
   },
-  //options(Object)
-  onLoad: function(options){
+  // 页面开始加载 就会触发
+  onLoad: function (options) {
+    // 1 发送异步请求获取轮播图数据  优化的手段可以通过es6的 promise来解决这个问题 
     // wx.request({
-    //   url: 'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
-    //   success: (result)=>{
+    //   url: 'https://api.zbztb.cn/api/public/v1/home/swiperdata',
+    //   success: (result) => {
     //     this.setData({
     //       swiperList: result.data.message
     //     })
     //   }
     // });
-    this.getSwiperList()
-    this.getCateList()
-    this.getFloorList()
+    
+    this.getSwiperList();
+    this.getCateList();
+    this.getFloorList();
+      
   },
+
   // 获取轮播图数据
-  getSwiperList() {
+  getSwiperList(){
     request({ url: "/home/swiperdata" })
     .then(result => {
       this.setData({
-        swiperList: result.data.message
+        swiperList: result
       })
     })
   },
@@ -36,9 +40,8 @@ Page({
   getCateList(){
     request({ url: "/home/catitems" })
     .then(result => {
-      console.log(result);
       this.setData({
-        catesList: result.data.message
+        catesList: result
       })
     })
   },
@@ -47,8 +50,8 @@ Page({
     request({ url: "/home/floordata" })
     .then(result => {
       this.setData({
-        floorList: result.data.message
+        floorList: result
       })
     })
-  }
-});
+  },
+})

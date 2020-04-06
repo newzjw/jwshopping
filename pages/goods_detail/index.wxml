@@ -1,4 +1,3 @@
-<!-- 轮播图 -->
 <view class="detail_swiper">
   <swiper
   autoplay
@@ -16,7 +15,6 @@
   </swiper>
 </view>
 
-<!-- 收藏 -->
 <view class="goods_price">￥{{goodsObj.goods_price}}</view>
 <view class="goods_name_row">
   <view class="goods_name">{{goodsObj.goods_name}}{{goodsObj.goods_name}}</view>
@@ -26,7 +24,6 @@
   </view>
 </view>
 
-<!-- 图文详情 -->
 <view class="goods_info">
   <view class="goods_info_title">图文详情</view>
   <view class="goods_info_content">
@@ -36,7 +33,6 @@
   </view>
 </view>
 
-<!-- 底部工具栏 -->
 <view class="btm_tool">
   <view class="tool_item">
     <view class="iconfont icon-icon-test7"></view>

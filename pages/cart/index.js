@@ -68,9 +68,7 @@ import { getSetting, chooseAddress, openSetting, showModal ,showToast} from "../
 import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
   data: {
-    // 用户收获地址
     address: {},
-    // 购物车数据
     cart: [],
     allChecked: false,
     totalPrice: 0,
@@ -94,7 +92,6 @@ Page({
       const scopeAddress = res1.authSetting["scope.address"];
       // 2 判断 权限状态
       if (scopeAddress === false) {
-        // 打开授权设置页面
         await openSetting();
       }
       // 4 调用获取收货地址的 api
@@ -157,6 +154,8 @@ Page({
   },
   // 商品数量的编辑功能
   async handleItemNumEdit(e) {
+
+
     // 1 获取传递过来的参数 
     const { operation, id } = e.currentTarget.dataset;
     // 2 获取购物车数组

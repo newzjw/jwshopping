@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "SearchInput": "../../components/SearchInput/SearchInput"
+    "SearchInput":"../../components/SearchInput/SearchInput"
   },
-  "navigationBarTitleText": "首页"
+  "navigationBarTitleText": "河阳网上商城"
 }

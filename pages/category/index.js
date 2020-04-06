@@ -1,10 +1,6 @@
-// pages/category/index.js
 import { request } from "../../request/index.js";
+import regeneratorRuntime from '../../lib/runtime/runtime';
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     // 左侧的菜单数据
     leftMenuList: [],
@@ -17,7 +13,8 @@ Page({
   },
   // 接口的返回数据
   Cates: [],
-  onLoad: function(option) {
+
+  onLoad: function (options) {
     /* 
     0 web中的本地存储和 小程序中的本地存储的区别
       1 写代码的方式不一样了 
@@ -36,11 +33,11 @@ Page({
     const Cates = wx.getStorageSync("cates");
     // 2 判断
     if (!Cates) {
-      // 如果本地存储不存在  发送请求获取数据
+      // 不存在  发送请求获取数据
       this.getCates();
     } else {
       // 有旧的数据 定义过期时间  先设置10s， 测试成功后可以改成 5分钟
-      if (Date.now() - Cates.time > 1000 * 100) {
+      if (Date.now() - Cates.time > 1000 * 10) {
         // 重新发送请求
         this.getCates();
       } else {
@@ -54,23 +51,43 @@ Page({
         })
       }
     }
+
   },
-  getCates(){
-    request({
-      url: "/categories"
-    })
-    .then(res => {
-      this.Cates = res.data.message
-      // 把接口的数据存入到本地存储中
-      wx.setStorageSync("cates", { time: Date.now(), data: this.Cates });
-      // 构造左侧的大菜单数据
-      let leftMenuList = this.Cates.map(v => v.cat_name);
-      // 构造右侧的商品数据
-      let rightContent = this.Cates[0].children;
-      this.setData({
-        leftMenuList,
-        rightContent
-      })
+  // 获取分类数据
+  async getCates() {
+    // request({
+    //   url: "/categories"
+    // })
+    //   .then(res => {
+    //     this.Cates = res.data.message;
+
+    //     // 把接口的数据存入到本地存储中
+    //     wx.setStorageSync("cates", { time: Date.now(), data: this.Cates });
+
+
+    //     // 构造左侧的大菜单数据
+    //     let leftMenuList = this.Cates.map(v => v.cat_name);
+    //     // 构造右侧的商品数据
+    //     let rightContent = this.Cates[0].children;
+    //     this.setData({
+    //       leftMenuList,
+    //       rightContent
+    //     })
+    //   })
+
+    // 1 使用es7的async await来发送请求
+    const res = await request({ url: "/categories" });
+    // this.Cates = res.data.message;
+    this.Cates = res;
+    // 把接口的数据存入到本地存储中
+    wx.setStorageSync("cates", { time: Date.now(), data: this.Cates });
+    // 构造左侧的大菜单数据
+    let leftMenuList = this.Cates.map(v => v.cat_name);
+    // 构造右侧的商品数据
+    let rightContent = this.Cates[0].children;
+    this.setData({
+      leftMenuList,
+      rightContent
     })
   },
   // 左侧菜单的点击事件
